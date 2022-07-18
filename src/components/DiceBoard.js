@@ -7,14 +7,17 @@ const DiceBoard = () => {
     { id: 2, name: "Miriam", roll: 0, score: 0 },
   ]);
 
-  const diceRoll = () => {
-    const diceScore = players.map((player) => {
-      return {
-        ...player,
-        roll: (player.roll = Math.floor(Math.random() * 7)),
-      };
-    });
-    setPlayers(diceScore);
+  const [dice1, setDice1] = useState(0);
+  const [dice2, setDice2] = useState(0);
+
+  const diceOneRoll = () => {
+    const diceScore = Math.floor(Math.random() * 7);
+    setDice1(diceScore);
+  };
+
+  const diceTwoRoll = () => {
+    const diceScore = Math.floor(Math.random() * 7);
+    setDice2(diceScore);
   };
 
   const compareRoll = () => {
@@ -56,7 +59,13 @@ const DiceBoard = () => {
           : "Loading.."}
       </div>
       <div>
-        <button onClick={diceRoll}>Roll!</button>{" "}
+        <div>
+          {dice1} {dice2}
+        </div>
+        <button onClick={diceOneRoll}>Roll 1!</button>{" "}
+        <button onClick={diceTwoRoll}>Roll 2!</button>
+      </div>
+      <div>
         <button onClick={compareRoll}>Compare rolls</button>{" "}
       </div>
     </div>
