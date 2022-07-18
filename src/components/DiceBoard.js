@@ -3,45 +3,61 @@ import "./DiceBoard.css";
 
 const DiceBoard = () => {
   const [players, setPlayers] = useState([
-    { id: 1, name: "Gonzalo", score: 0 },
-    { id: 2, name: "Miriam", score: 10 },
+    { id: 1, name: "Gonzalo", roll: 0, score: 0 },
+    { id: 2, name: "Miriam", roll: 0, score: 0 },
   ]);
 
-  const [diceNumber, setDiceNumber] = useState(0);
-
-  const randomNumber1 = () => {
-    setDiceNumber = Math.floor(Math.random() * 7);
+  const diceRoll = () => {
+    const diceScore = players.map((player) => {
+      return {
+        ...player,
+        roll: (player.roll = Math.floor(Math.random() * 7)),
+      };
+    });
+    setPlayers(diceScore);
   };
 
-  const randomNumber2 = Math.floor(Math.random() * 7);
+  const compareRoll = () => {
+    const player1 = players[0];
+    const player2 = players[1];
 
-  const rollingDice = () => {
-    if (randomNumber1 === randomNumber2) {
-      return console.log("Tie! Roll again.");
-    } else if (randomNumber1 > randomNumber2) {
-      return console.log("Player 1 wins one point!");
-    } else {
-      return console.log("Player 2 wins one point!");
-    }
+    const whoWon = player1.roll > player2.roll ? player1.id : player2.id;
+
+    const updateScore = players.map((player) => {
+      if (whoWon === player.id) {
+        return {
+          ...player,
+          score: player.score + 1,
+          // console.log(player.name, "has scored!");
+        };
+      } else {
+        return player;
+      }
+    });
+    setPlayers(updateScore);
   };
 
   return (
-    <div>
-      {players
-        ? players.map((player, index) => {
-            return (
-              <div key={index}>
-                <p>{player.name}</p>
-                <p>{player.score}</p>
-              </div>
-            );
-          })
-        : "Loading.."}
-      <div>{diceNumber}</div>
-      <div>{randomNumber2}</div>
+    <div className="Scoreboard">
+      <h1>Scoreboard</h1>
+      <div className="BothPlayers">
+        {players
+          ? players.map((player, index) => {
+              return (
+                <div className="Player" key={index}>
+                  <p>
+                    <b>{player.name}</b>
+                  </p>
+                  <p>Score: {player.score}</p>
+                  <p>Roll: {player.roll}</p>
+                </div>
+              );
+            })
+          : "Loading.."}
+      </div>
       <div>
-        <button onClick={randomNumber1}>Roll</button>
-        <button onClick={randomNumber2}>Roll</button>
+        <button onClick={diceRoll}>Roll!</button>{" "}
+        <button onClick={compareRoll}>Compare rolls</button>{" "}
       </div>
     </div>
   );

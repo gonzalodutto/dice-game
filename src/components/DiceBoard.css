@@ -1,0 +1,20 @@
+.Scoreboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.BothPlayers {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+}
+
+.Player {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: solid 1px black;
+  margin: 1rem;
+  padding: 1rem;
+}
